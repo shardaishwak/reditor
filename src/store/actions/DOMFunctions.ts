@@ -83,9 +83,10 @@ export const getParentElement = () => {
  *
  * Not impletemented and optimized
  */
-export const handleCaretPosition = (e) => {
+export const handleCaretPosition = (e: React.ChangeEvent<any>) => {
   // get position of caret for a certain contenEditable container.
   const element = e.currentTarget;
+
   var doc = element.ownerDocument || element.document;
   var win = doc.defaultView || doc.parentWindow;
   var range = win.getSelection().getRangeAt(0);
@@ -110,7 +111,7 @@ export const handleCaretPosition = (e) => {
  *
  * @internetOption StackOverflow
  */
-export const moveCaretToEnd = (e) => {
+export const moveCaretToEnd = (e: any) => {
   var range, selection;
   if (document.createRange) {
     range = document.createRange();
@@ -140,13 +141,13 @@ export const moveCaretToEnd = (e) => {
  *
  * Need to be updated if changes the .editor--editor-safeview
  */
-export const getNextEditor = (e) => {
+export const getNextEditor = (e: any) => {
   return (
     e.currentTarget.parentElement.nextSibling &&
     e.currentTarget.parentElement.nextSibling.children[0]
   );
 };
-export const getPreviousEditor = (e) => {
+export const getPreviousEditor = (e: any) => {
   return (
     e.currentTarget.parentElement.previousSibling &&
     e.currentTarget.parentElement.previousSibling.children[0]
@@ -173,9 +174,9 @@ export const isTextHighlighted = () => {
 
   return selectedElement.classList.contains("editor--highlight-text");
 };
-export const isValidUrl = (string) => {
+export const isValidUrl = (url: string) => {
   try {
-    new URL(string);
+    new URL(url);
   } catch (_) {
     return false;
   }

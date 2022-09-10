@@ -22,8 +22,8 @@ export const openUpdateEditor = (
 };
 // Remove default etxt copy styling and give the editor one
 export const handleOnPaste = (
-  state: EditorReducerType,
-  { event: e, index }: { event: React.KeyboardEvent; index: number }
+  _: EditorReducerType,
+  { event: e }: { event: React.KeyboardEvent }
 ) => {
   var clipboardData, pastedData;
 
@@ -92,7 +92,7 @@ export const addEditorWithPosition = (
   { index }: { index: number }
 ) => {
   // check if the currentEditor is the last one, if so, just add a one simply
-  if (index === state.editors.length - 1) return addEditor(state, null);
+  if (index === state.editors.length - 1) return addEditor(state);
 
   // the new editor is added after the currentOne, and before the nextEditor of the currentOne
   // causes re-render, which is required
@@ -111,8 +111,8 @@ export const addEditorWithPosition = (
 
 // Add an editor at the last simply
 // cauesed re-render which is requires
-export const addEditor = (state: EditorReducerType, action) => {
-  const editors = <Array<Editor>>[...state.editors, new EditorConstructor()];
+export const addEditor = (state: EditorReducerType) => {
+  const editors = [...state.editors, new EditorConstructor()] as Array<Editor>;
   return {
     ...state,
     editors,
@@ -199,7 +199,7 @@ export const removeEditorByReactElement = (
 // =================================== EXTRACT DATA ==================================
 
 //  This is the returning point of all the data of all the editors at once
-export const extractData = (state: EditorReducerType, action) => {};
+export const extractData = (state: EditorReducerType) => {};
 
 /** 
    * @todo 

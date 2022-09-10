@@ -10,7 +10,7 @@ const getElementCoordinates = () => {
   return coordinates;
 };
 
-export const updatePosition = (state: EditorReducerType, action) => {
+export const updatePosition = (state: EditorReducerType) => {
   /**
    * @todo has been just changed 23/10/2020 10:50PM
    */

@@ -76,10 +76,7 @@ export interface EditorReducerAction<T> {
 }
 
 // handle all the global functions realted to the change in state
-const reducer = (
-  state: EditorReducerType,
-  action: EditorReducerAction<any>
-) => {
+const reducer = (state: EditorReducerType, action: any) => {
   switch (action.type) {
     case OPEN_UPDATE_EDITOR:
       return openUpdateEditor(state, action);
@@ -163,13 +160,16 @@ const reducer = (
   }
 };
 
+interface ProviderProps {
+  initialEditors: Array<Editor>;
+  initialTitle: string;
+  id: string;
+}
+
 export default class EditorProvider extends React.PureComponent<
-  {
-    initialEditors?: Array<Editor>;
-    initialTitle?: string;
-    id?: string;
-  },
-  EditorReducerType
+  React.PropsWithChildren<ProviderProps>,
+  EditorReducerType,
+  () => React.ReactNode
 > {
   state = {
     editors:
@@ -178,10 +178,10 @@ export default class EditorProvider extends React.PureComponent<
         initialValue: a.text,
       })) || ([new EditorConstructor()] as Array<Editor>),
     editor_title: this.props.initialTitle || "",
-    editor_title_initial: this.props.initialTitle || null,
-    id: this.props.id || null,
+    editor_title_initial: this.props.initialTitle || "",
+    id: this.props.id || "",
   };
-  async componentDidUpdate(oldState, newState) {
+  async componentDidUpdate(_: any, newState: EditorReducerType) {
     // check if a new editor has been added
     if (
       JSON.stringify(this.state.editors) !== JSON.stringify(newState.editors) &&
@@ -198,12 +198,13 @@ export default class EditorProvider extends React.PureComponent<
        * if not use the idea, remove type:"new_editor" from @function addEditor and @function addEditorWithPosition
        */
       //if (element.type === "new_editor") return;
-      document.getElementById("editor-" + element.id).focus();
+      document.getElementById("editor-" + element.id)?.focus();
     }
   }
 
   _reducer = reducer;
-  reducer = (action) => this.setState(this._reducer(this.state, action));
+  reducer = (action: any) =>
+    this.setState(this._reducer(this.state, action) as EditorReducerType);
 
   render() {
     return (
@@ -218,11 +219,18 @@ export default class EditorProvider extends React.PureComponent<
 
 // wrap container to use this.props.state, this.props.dispatch for running the functions
 
-export const withEditorReducer = (Component) => {
-  return (props) => {
+export const withEditorReducer = (
+  Component:
+    | React.PureComponent
+    | React.Component
+    | React.FC
+    | React.ReactNode
+    | React.ReactElement
+) => {
+  return (props: any) => {
     const { state, dispatch } = useContext(EditorContext);
 
-    return <Component {...props} state={state} dispatch={dispatch} />;
+    return <Component state={state} dispatch={dispatch} {...props} />;
   };
 };
 

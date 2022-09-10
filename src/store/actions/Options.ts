@@ -1,4 +1,4 @@
-import { Editor, TEditor } from "../types";
+import { Editor, EditorImage, TEditor } from "../types";
 import { EditorReducerType } from "../provider";
 
 /**
@@ -8,8 +8,10 @@ import { EditorReducerType } from "../provider";
  */
 export const setImage = (
   state: EditorReducerType,
-  { index, src, thumb, provider, id, info, regular }
+  action: EditorImage & { index: number }
 ) => {
+  const { index, src, thumb, provider, id, info, regular } = action;
+
   const editors = [...state.editors];
   editors[index].type = TEditor.image;
 
