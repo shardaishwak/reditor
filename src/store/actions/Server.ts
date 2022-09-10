@@ -1,6 +1,6 @@
 import axios from "axios";
-import { Editor } from "../../../../redux-store";
-import utils from "../../../../utils";
+import { Editor } from "../types";
+import utils from "../utils";
 
 export const fetchSaveEditor = async (
   title: string,

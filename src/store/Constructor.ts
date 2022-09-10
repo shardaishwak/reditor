@@ -1,39 +1,38 @@
 import { nanoid } from "nanoid";
+import { EditorImage, TEditor } from "./types";
 
 class Constructor {
   id: string;
   text: string;
   initialValue: string;
 
-  type: string;
+  type: TEditor;
   level?: number | null;
   embed_src?: string | null;
 
-  image: {
-    src: string | null;
-    thumb: string | null;
-    id: string | null;
-    provider: string | null;
-    info: string | null;
-    size: string | null;
-  };
+  image: EditorImage;
 
-  constructor(initialValue?: string, type?: string) {
+  constructor(initialValue?: string, type?: TEditor) {
     this.text = initialValue || "";
     this.id = nanoid();
     // initalValue is used as the placeholder of the defailt data from the DB
     this.initialValue = initialValue || "";
-    this.type = type || "paragraph";
+    this.type = type || TEditor.paragraph;
     this.level = null;
     this.embed_src = null;
 
     this.image = {
-      thumb: null,
-      src: null,
-      id: null,
-      provider: null,
-      info: null,
-      size: null,
+      thumb: "",
+      src: "",
+      id: "",
+      provider: "",
+      info: {
+        name: "",
+        username: "",
+        email: "",
+      },
+      size: "",
+      regular: "",
     };
   }
 }

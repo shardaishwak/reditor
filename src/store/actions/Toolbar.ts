@@ -1,4 +1,4 @@
-import { IEditorState } from "../EditorProvider";
+import { EditorReducerType } from "../provider";
 
 const getElementCoordinates = () => {
   // get the coordinates of the selected
@@ -10,7 +10,7 @@ const getElementCoordinates = () => {
   return coordinates;
 };
 
-export const updatePosition = (state: IEditorState, action) => {
+export const updatePosition = (state: EditorReducerType, action) => {
   /**
    * @todo has been just changed 23/10/2020 10:50PM
    */

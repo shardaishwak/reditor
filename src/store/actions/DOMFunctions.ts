@@ -19,7 +19,7 @@
 export const getElementCoordinates = () => {
   // get the coordinates of the selected
   const coordinates = document
-    .getSelection()
+    ?.getSelection()
     .getRangeAt(0)
     .getBoundingClientRect();
 
